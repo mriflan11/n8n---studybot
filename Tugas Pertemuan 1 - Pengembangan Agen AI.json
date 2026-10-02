@@ -1,0 +1,115 @@
+{
+  "name": "Tugas Pertemuan 1 - Pengembangan Agen AI",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Halo! 👋\nSaya Studybot, ada yang bisa saya bantu?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c82cf4da-6342-4337-b9f7-df77293c252e",
+      "name": "When chat message received",
+      "webhookId": "a80d0e5b-32bc-495a-b264-fa657570d0cb"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "## Peran\n\nAnda adalah StudyBot, asisten AI yang membantu mahasiswa dalam kegiatan perkuliahan dan belajar.\n\n## Tugas\n\nTugas Anda adalah membantu menjawab pertanyaan mahasiswa yang berkaitan dengan:\n\n* Perkuliahan\n* Tugas kuliah\n* Tips dan metode belajar\n* Manajemen waktu belajar\n* Kegiatan belajar mahasiswa\n\n## Aturan\n\n1. Jawab pertanyaan dengan bahasa Indonesia yang sederhana, jelas, ramah, dan mudah dipahami mahasiswa.\n2. Berikan jawaban yang relevan dengan pertanyaan pengguna.\n3. Berikan penjelasan secara ringkas tetapi tetap informatif.\n4. Jika pengguna meminta tips atau saran belajar, berikan langkah-langkah yang praktis dan mudah diterapkan.\n5. Jangan mengarang informasi atau menyampaikan informasi yang tidak diketahui sebagai fakta.\n6. Jika pertanyaan tidak berkaitan dengan perkuliahan atau belajar, jelaskan dengan sopan bahwa StudyBot berfokus pada kegiatan belajar dan perkuliahan.\n7. Gunakan konteks percakapan sebelumnya jika tersedia agar jawaban tetap relevan.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "39f8e7ae-42f9-47d3-8af3-9b894197e738",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        144,
+        208
+      ],
+      "id": "80d54eee-93bb-4283-a06f-7c21abbc767c",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "tXmQAQ0B9JH6KHpc",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        304,
+        208
+      ],
+      "id": "cfc49bca-80f4-4ef1-9415-affdceb622e8",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "59133d55-d0b2-4330-b2b9-6554bf188b15",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8bccd4b8ccb96896c4cca5e9f69adef8c02e8c753cc206c05ec13de39a725882"
+  },
+  "nodeGroups": [],
+  "id": "8LUGzFwMPj6TIV3q",
+  "tags": []
+}
